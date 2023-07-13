@@ -3,11 +3,10 @@ import socket
 import os
 from datetime import datetime
 import time
-from colorama import Fore, Style
 
 os.system("cls")
 print("PyChat ver 0.5.8 --client \n")
-ipadresa=input("Enter the IP adress of the server: ")
+ipadresa=input("Enter the adress of the server: ")
 portadr=input("Enter the port of the server: ")
 
 pc=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,7 +22,7 @@ def primire():
             if mesaj=='nume':
                 pc.send(nume.encode('ascii'))
             else:
-                print(Fore.GREEN + mesaj + Style.RESET_ALL)
+                print(mesaj)
         except:
             print("You are no longer connected to the server!")
             pc.close()
