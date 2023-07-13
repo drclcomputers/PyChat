@@ -5,9 +5,7 @@ import time
 
 os.system("cls")
 print("PyChat ver 0.5.8 --server \n")
-hostname=socket.gethostname()
-host=socket.gethostbyname(hostname)
-print("Your IP adress is "+host)
+host=input("Enter this device's IP adress: ")
 port=input("Enter your desire server port (recommended 55555): ")
 print("In order for other computers to connect, you'll need to open the respective port!")
 
