@@ -4,12 +4,15 @@ import os
 import time
 
 os.system("cls")
-print("PyChat ver 0.5.6 --server \n")
-host=input("Enter the IP of this device: ")
-port=55555
+print("PyChat ver 0.5.8 --server \n")
+hostname=socket.gethostname()
+host=socket.gethostbyname(hostname)
+print("Your IP adress is "+host)
+port=input("Enter your desire server port (recommended 55555): ")
+print("In order for other computers to connect, you'll need to open the respective port!")
 
 server=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((host, port))
+server.bind((host, int(port)))
 server.listen()
 
 pcs=[]

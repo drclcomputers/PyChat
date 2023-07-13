@@ -6,7 +6,7 @@ import time
 from colorama import Fore, Style
 
 os.system("cls")
-print("PyChat ver 0.5.6 --client \n")
+print("PyChat ver 0.5.8 --client \n")
 ipadresa=input("Enter the IP adress of the server: ")
 portadr=input("Enter the port of the server: ")
 
