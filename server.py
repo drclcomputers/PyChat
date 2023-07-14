@@ -33,12 +33,12 @@ def handle(pc):
                 trimitere(mesaj)
         except:
             index=pcs.index(pc)
+            print(str(pc)+" disconnected!")
+            pcs.remove(pc)
+            pc.close()
             nume=numes[index]
             trimitere(str("--"+nume + " left the chat!--").encode('ascii'))
             numes.remove(nume)
-            print(str(pc)+" disconnected!")
-            pc.close()
-            pcs.remove(pc)
             break
 
 def primire():

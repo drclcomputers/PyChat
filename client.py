@@ -2,6 +2,7 @@ import threading
 import socket
 import os
 import time
+from colorama import Fore, Style
 
 os.system("cls")
 print("PyChat ver 0.5.9 --client \n")
@@ -28,7 +29,7 @@ def primire():
                 if mesaj.startswith(nume+": "):
                     pass
                 else:
-                    print(mesaj)
+                    print(Fore.GREEN + mesaj + Style.RESET_ALL)
         except:
             pc.close()
             print("You are no longer connected to the server!")
