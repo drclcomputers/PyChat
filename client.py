@@ -14,36 +14,39 @@ pc.connect((ipadresa, int(portadr)))
 nume=input("Enter name: ")
 os.system('cls')
 
+running=True
 def primire():
-    global aux, nume
+    global running
     while True:
+        if running==False:
+            break
         try:
             mesaj=pc.recv(1024).decode('ascii')
             if mesaj=='nume':
                 pc.send(nume.encode('ascii'))
             else:
-                if aux==mesaj:
-                    pass
-                else:
-                    print(mesaj)
+                print(mesaj)
         except:
-            print("You are no longer connected to the server!")
             pc.close()
+            print("You are no longer connected to the server!")
+            time.sleep(1)
+            print("Closing the client...")
+            running=False
             break
 
 def trimitere():
-    global aux
+    global running
     while True:
+        if running==False:
+            break
         mesaj=nume+": "+input("")
-        aux=mesaj
-        if mesaj==nume+": /exit":
-            print("Leaving the chat...")
-            time.sleep(1)
-            print("Closing the client...")
-            pc.close()
-            exit()
+        if mesaj[len(nume)+2].startswith("/"):
+            if mesaj[len(nume)+2:].startswith("/exit"):
+                pc.close()
+                running=False
+                exit()
         else:
-            pc.send(str(mesaj).encode('ascii'))
+            pc.send(mesaj.encode('ascii'))
 
 primire_thread=threading.Thread(target=primire)
 primire_thread.start()
