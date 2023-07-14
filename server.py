@@ -5,10 +5,9 @@ import time
 from datetime import datetime
 
 os.system("cls")
-print("PyChat ver 0.5.8 --server \n")
+print("PyChat ver 0.5.9 --server \n")
 host='127.0.0.1'
 port=9999
-print("In order for other computers to connect, you'll need to open the respective port!")
 
 server=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((host, port))
@@ -27,12 +26,12 @@ def handle(pc):
             mesaj=pc.recv(1024)
             if '/exit' in mesaj:
                 index=pcs.index(pc)
-                pcs.remove(pc)
-                pc.close()
                 nume=numes[index]
-                trimitere(("--"+nume + " left the chat!--").encode('ascii'))
+                trimitere(str("--"+nume + " left the chat!--").encode('ascii'))
                 numes.remove(nume)
                 print(str(pc)+" disconnected!")
+                pc.close()
+                pcs.remove(pc)
                 break
             elif '/list' in mesaj:
                 trimitere(str(numes).encode('ascii'))
@@ -43,12 +42,12 @@ def handle(pc):
                 trimitere(mesaj)
         except:
             index=pcs.index(pc)
-            pcs.remove(pc)
-            pc.close()
             nume=numes[index]
-            trimitere(("--"+nume + " left the chat!--").encode('ascii'))
+            trimitere(str("--"+nume + " left the chat!--").encode('ascii'))
             numes.remove(nume)
             print(str(pc)+" disconnected!")
+            pc.close()
+            pcs.remove(pc)
             break
 
 def primire():
@@ -61,7 +60,7 @@ def primire():
         numes.append(nume)
         pcs.append(pc)
 
-        pc.send('--Succesfully connected to the server!-- \n'.encode('ascii'))
+        pc.send('--Succesfully connected to the server!--'.encode('ascii'))
         trimitere(("--"+nume + ' entered the chat!--').encode('ascii'))
 
         thread=threading.Thread(target=handle, args=(pc,))
