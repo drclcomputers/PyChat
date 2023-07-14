@@ -2,6 +2,7 @@ import threading
 import socket
 import os
 import time
+from datetime import datetime
 
 os.system("cls")
 print("PyChat ver 0.5.8 --server \n")
@@ -24,7 +25,22 @@ def handle(pc):
     while True:
         try:
             mesaj=pc.recv(1024)
-            trimitere(mesaj)
+            if mesaj==nume+': exit':
+                index=pcs.index(pc)
+                pcs.remove(pc)
+                pc.close()
+                nume=numes[index]
+                trimitere(("--"+nume + " left the chat!--").encode('ascii'))
+                numes.remove(nume)
+                print(str(pc)+" disconnected!")
+                break
+            elif mesaj==nume+': /list':
+                trimitere(numes)
+            elif mesaj==nume+': /time':
+                timp=datetime.now()
+                trimitere(nume+": Time is "+str(timp))
+            else:
+                trimitere(mesaj)
         except:
             index=pcs.index(pc)
             pcs.remove(pc)
@@ -32,7 +48,7 @@ def handle(pc):
             nume=numes[index]
             trimitere(("--"+nume + " left the chat!--").encode('ascii'))
             numes.remove(nume)
-            print(str(pc)+" deconnected!")
+            print(str(pc)+" disconnected!")
             break
 
 def primire():
@@ -46,7 +62,7 @@ def primire():
         pcs.append(pc)
 
         pc.send('--Succesfully connected to the server!-- \n'.encode('ascii'))
-        trimitere(("--"+nume + ' entered the chat! --').encode('ascii'))
+        trimitere(("--"+nume + ' entered the chat!--').encode('ascii'))
 
         thread=threading.Thread(target=handle, args=(pc,))
         thread.start()

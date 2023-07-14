@@ -1,7 +1,6 @@
 import threading
 import socket
 import os
-from datetime import datetime
 import time
 
 os.system("cls")
@@ -14,7 +13,7 @@ pc.connect((ipadresa, int(portadr)))
 
 nume=input("Enter name: ")
 os.system('cls')
-
+size=os.get_terminal_size()
 def primire():
     while True:
         try:
@@ -34,12 +33,9 @@ def trimitere():
         if mesaj==nume+": exit":
             print("Leaving the chat...")
             time.sleep(1)
-            print("Exiting...")
+            print("Closing the client...")
             pc.close()
             exit()
-        elif mesaj==nume+": /time":
-            timp=datetime.now()
-            pc.send((nume+": Time is "+str(timp)).encode('ascii'))
         else:
             pc.send(mesaj.encode('ascii'))
 
