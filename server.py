@@ -17,7 +17,7 @@ pcs=[]
 numes=[]
 
 comenzi={
-    "/cls":"Clear the chat",
+    "/clear":"Clear the chat",
     "/time":"Sends the time and date",
     "/list":"Shows all the members of the chat",
     "/exit":"Disconnects from the servers and closes the client",
