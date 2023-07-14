@@ -29,6 +29,9 @@ def handle(pc):
             elif mesaj.decode('ascii')=='TIME':
                 timp=datetime.now()
                 trimitere(str(timp).encode('ascii'))
+            elif mesaj.decode('ascii')=='EXIT':
+                pc.close()
+                trimitere(str("--"+nume + " left the chat!--").encode('ascii'))
             else:
                 trimitere(mesaj)
         except:

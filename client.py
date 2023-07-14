@@ -47,7 +47,7 @@ def trimitere():
         mesaj=nume+": "+input("")
         if mesaj[len(nume)+2].startswith("/"):
             if mesaj[len(nume)+2:].startswith("/exit"):
-                pc.close()
+                pc.send("EXIT".encode('ascii'))
                 running=False
                 exit()
             if mesaj[len(nume)+2:].startswith("/list"):
