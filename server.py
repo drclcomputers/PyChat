@@ -6,7 +6,7 @@ from datetime import datetime
 
 os.system("cls")
 print("PyChat ver 0.5.8 --server \n")
-host='127.0.0.7'
+host='127.0.0.1'
 port=9999
 print("In order for other computers to connect, you'll need to open the respective port!")
 
@@ -25,7 +25,7 @@ def handle(pc):
     while True:
         try:
             mesaj=pc.recv(1024)
-            if mesaj==nume+': exit':
+            if '/exit' in mesaj:
                 index=pcs.index(pc)
                 pcs.remove(pc)
                 pc.close()
@@ -34,11 +34,11 @@ def handle(pc):
                 numes.remove(nume)
                 print(str(pc)+" disconnected!")
                 break
-            elif mesaj==nume+': /list':
-                trimitere(numes)
-            elif mesaj==nume+': /time':
+            elif '/list' in mesaj:
+                trimitere(str(numes).encode('ascii'))
+            elif '/time' in mesaj:
                 timp=datetime.now()
-                trimitere(nume+": Time is "+str(timp))
+                trimitere(str(timp).encode('ascii'))
             else:
                 trimitere(mesaj)
         except:
