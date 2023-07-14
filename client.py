@@ -45,6 +45,8 @@ def trimitere():
                 pc.close()
                 running=False
                 exit()
+            if mesaj[len(nume)+2:].startswith("/list"):
+                pc.send("LIST".encode('ascii'))
         else:
             pc.send(mesaj.encode('ascii'))
 

@@ -24,7 +24,10 @@ def handle(pc):
     while True:
         try:
             mesaj=pc.recv(1024)
-            trimitere(mesaj)
+            if mesaj.decode('ascii')=='LIST':
+                trimitere(str(numes).encode('ascii'))
+            else:
+                trimitere(mesaj)
         except:
             index=pcs.index(pc)
             nume=numes[index]
