@@ -26,6 +26,9 @@ def handle(pc):
             mesaj=pc.recv(1024)
             if mesaj.decode('ascii')=='LIST':
                 trimitere(str(numes).encode('ascii'))
+            elif mesaj.decode('ascii')=='TIME':
+                timp=datetime.now()
+                trimitere(str(timp).encode('ascii'))
             else:
                 trimitere(mesaj)
         except:

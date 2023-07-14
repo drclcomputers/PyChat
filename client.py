@@ -25,7 +25,10 @@ def primire():
             if mesaj=='nume':
                 pc.send(nume.encode('ascii'))
             else:
-                print(mesaj)
+                if mesaj.startswith(nume+": "):
+                    pass
+                else:
+                    print(mesaj)
         except:
             pc.close()
             print("You are no longer connected to the server!")
@@ -38,6 +41,7 @@ def trimitere():
     global running
     while True:
         if running==False:
+            pc.close()
             break
         mesaj=nume+": "+input("")
         if mesaj[len(nume)+2].startswith("/"):
@@ -47,6 +51,8 @@ def trimitere():
                 exit()
             if mesaj[len(nume)+2:].startswith("/list"):
                 pc.send("LIST".encode('ascii'))
+            if mesaj[len(nume)+2:].startswith("/time"):
+                pc.send("TIME".encode('ascii'))
         else:
             pc.send(mesaj.encode('ascii'))
 
