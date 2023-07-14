@@ -5,7 +5,7 @@ import time
 from colorama import Fore, Style
 
 os.system("cls")
-print("PyChat ver 0.5.9 --client \n")
+print("PyChat ver 0.6.2 --client \n")
 ipadresa=input("Enter the adress of the server: ")
 portadr=input("Enter the port of the server: ")
 
@@ -49,11 +49,18 @@ def trimitere():
             if mesaj[len(nume)+2:].startswith("/exit"):
                 pc.send("EXIT".encode('ascii'))
                 running=False
+                print("You are no longer connected to the server!")
+                time.sleep(1)
+                print("Closing the client...")
                 exit()
             if mesaj[len(nume)+2:].startswith("/list"):
                 pc.send("LIST".encode('ascii'))
             if mesaj[len(nume)+2:].startswith("/time"):
                 pc.send("TIME".encode('ascii'))
+            if mesaj[len(nume)+2:].startswith("/clear"):
+                os.system('cls')
+            if mesaj[len(nume)+2:].startswith("/help"):
+                pc.send("HELP".encode('ascii'))
         else:
             pc.send(mesaj.encode('ascii'))
 

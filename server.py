@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 
 os.system("cls")
-print("PyChat ver 0.5.9 --server \n")
+print("PyChat ver 0.6.2 --server \n")
 host='127.0.0.1'
 port=55555
 
@@ -15,6 +15,14 @@ server.listen()
 
 pcs=[]
 numes=[]
+
+comenzi={
+    "/cls":"Clear the chat",
+    "/time":"Sends the time and date",
+    "/list":"Shows all the members of the chat",
+    "/exit":"Disconnects from the servers and closes the client",
+    "/help":"Shows help"
+}
 
 def trimitere(mesaj):
     for pc in pcs:
@@ -32,6 +40,8 @@ def handle(pc):
             elif mesaj.decode('ascii')=='EXIT':
                 pc.close()
                 trimitere(str("--"+nume + " left the chat!--").encode('ascii'))
+            elif mesaj.decode('ascii')=='HELP':
+                pc.send(str(comenzi).encode('ascii'))
             else:
                 trimitere(mesaj)
         except:
