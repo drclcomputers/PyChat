@@ -52,11 +52,15 @@ def handle(pc):
             elif mesaj.decode('ascii').startswith('KICK'):
                 if pc in admins:
                     perskick=mesaj[4:]
+                    print("kicking "+perskick)
                     if perskick in numes:
                         index=numes.index(perskick)
                         pcrt=pcs.index(index)
+                        numes.remove(perskick)
+                        pcs.remove(pcrt)
                         pcrt.send("KICKYOU".encode("ascii"))
-                        pcrt.close()
+                    else:
+                        pc.send("Person isn't in the chat!".encode('ascii'))
                 else:
                     pc.send("You are not the admin!".encode('ascii'))
             else:
