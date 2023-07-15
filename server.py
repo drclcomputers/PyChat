@@ -5,9 +5,10 @@ import time
 from datetime import datetime
 
 os.system("cls")
-print("PyChat ver 0.7.1 --server \n")
+print("PyChat ver 0.7.3 --server \n")
 host='127.0.0.1'
 port=55555
+passwordreal=input("Set admin password: ")
 
 server=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((host, port))
@@ -21,11 +22,13 @@ comenzi={
     "/clear":"Clear the chat",
     "/time":"Sends the time and date",
     "/list":"Shows all the members of the chat",
+    "/admin":"Shows the list of the admins",
+    "/password":"Enter the password to become an admin (exp: /password password)",
+    "/kick":"(Admin privileges required) Kicks a member (exp: /kick member1)",
     "/exit":"Disconnects from the servers and closes the client",
     "/help":"Shows help"
 }
 
-passwordreal="pychatetare"
 password=None
 
 def trimitere(mesaj):
@@ -39,6 +42,8 @@ def handle(pc):
             if mesaj.startswith('.'):
                 if mesaj=='.LIST':
                     pc.send(str(numes).encode("utf-8"))
+                if mesaj=='.ADMINLIST':
+                    pc.send(str(admins).encode("utf-8"))
                 if mesaj=='.TIME':
                     timp=datetime.now()
                     pc.send(str(timp).encode("utf-8"))
