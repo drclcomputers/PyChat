@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 
 os.system("cls")
-print("PyChat ver 0.6.9 --server \n")
+print("PyChat ver 0.7.0 --server \n")
 host='127.0.0.1'
 port=55555
 
@@ -46,11 +46,8 @@ def handle(pc):
                 trimitere(str("--"+nume + " left the chat!--").encode('ascii'))
             elif mesaj.decode('ascii')=='HELP':
                 pc.send(str(comenzi).encode('ascii'))
-            elif mesaj.decode('ascii')=='PASS':
-                pc.send('plspass'.encode('ascii'))
-                time.sleep(1)
-                msj=pc.recv(1024).decode('ascii')
-                password=msj
+            elif 'PASSADMIN ' in mesaj.decode('ascii'):
+                password=mesaj[9:]
                 print("Tried pass is: ."+password+".")
                 if password==passwordreal:
                     print("This pc is now admin!!!")
@@ -61,11 +58,11 @@ def handle(pc):
                 else:
                     pc.send("Wrong password!!!".encode('ascii'))
                 print(str(admins))
-            elif mesaj.decode('ascii')=='KICK':
+            elif 'KICK ' in mesaj.decode('ascii'):
                 index=pcs.index(pc)
                 nume=numes[index]
                 if nume in admins:
-                    perskick=mesaj[5:]
+                    perskick=mesaj[4:]
                     print("kicking "+perskick)
                     if perskick in numes:
                         index=numes.index(perskick)
