@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 
 os.system("cls")
-print("PyChat ver 0.6.2 --server \n")
+print("PyChat ver 0.6.8 --server \n")
 host='127.0.0.1'
 port=55555
 
@@ -15,6 +15,7 @@ server.listen()
 
 pcs=[]
 numes=[]
+admins=[]
 
 comenzi={
     "/clear":"Clear the chat",
@@ -23,6 +24,9 @@ comenzi={
     "/exit":"Disconnects from the servers and closes the client",
     "/help":"Shows help"
 }
+
+passwordreal="pychatetare"
+password=None
 
 def trimitere(mesaj):
     for pc in pcs:
@@ -42,6 +46,28 @@ def handle(pc):
                 trimitere(str("--"+nume + " left the chat!--").encode('ascii'))
             elif mesaj.decode('ascii')=='HELP':
                 pc.send(str(comenzi).encode('ascii'))
+            elif mesaj.decode('ascii')=='PASS':
+                pc.send("ADMIN")
+                password=pc.recv(1024)
+                if password.decode('ascii')==passwordreal:
+                    pc.send("You are now an admin!".encode('ascii'))
+                    admins.append(pc)
+            elif mesaj.decode('ascii')=='KICK' and password==passwordreal:
+                if pc in admins:
+                    pc.send(str(numes).encode('ascii'))
+                    pc.send('NKICK'.encode('ascii'))
+                    nkick=pc.recv(1024).decode('ascii')
+                    if nkick in numes:
+                        index=numes.index(nkick)
+                        numes.remove(nkick)
+                        pcrt=pcs.index(index)
+                        pcrt.close()
+                        pcs.remove(pcrt)
+                        pcrt.send("KICKYOU".encode('ascii'))
+                    else:
+                        pc.send("Member isn't in the chat!".encode("ascii"))
+                else:
+                    pc.send("You are not the admin!".encode('ascii'))
             else:
                 trimitere(mesaj)
         except:

@@ -5,7 +5,7 @@ import time
 from colorama import Fore, Style
 
 os.system("cls")
-print("PyChat ver 0.6.2 --client \n")
+print("PyChat ver 0.6.8 --client \n")
 ipadresa=input("Enter the adress of the server: ")
 portadr=input("Enter the port of the server: ")
 
@@ -25,6 +25,19 @@ def primire():
             mesaj=pc.recv(1024).decode('ascii')
             if mesaj=='nume':
                 pc.send(nume.encode('ascii'))
+            elif mesaj=="ADMIN":
+                password=input("Enter admin password: ")
+                pc.send(password.encode('ascii'))
+            elif mesaj=="NKICK":
+                nkick=input('Enter the name of the one you want to kick: ')
+                pc.send(nkick.encode('ascii'))
+            elif mesaj=='KICKYOU':
+                print("You've been kicked from the group chat!")
+                print("You are no longer connected to the server!")
+                time.sleep(1)
+                print("Closing the client...")
+                running=False
+                break
             else:
                 if mesaj.startswith(nume+": "):
                     pass
@@ -61,6 +74,10 @@ def trimitere():
                 os.system('cls')
             if mesaj[len(nume)+2:].startswith("/help"):
                 pc.send("HELP".encode('ascii'))
+            if mesaj[len(nume)+2:].startswith("/pass"):
+                pc.send("PASS".encode('ascii'))
+            if mesaj[len(nume)+2:].startswith("/kick"):
+                pc.send("KICK".encode('ascii'))
         else:
             pc.send(mesaj.encode('ascii'))
 
