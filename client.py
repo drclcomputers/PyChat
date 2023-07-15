@@ -25,9 +25,6 @@ def primire():
             mesaj=pc.recv(1024).decode('ascii')
             if mesaj=='nume':
                 pc.send(nume.encode('ascii'))
-            elif mesaj=="ADMIN":
-                password=input("Enter admin password: ")
-                pc.send(password.encode('ascii'))
             elif mesaj=='KICKYOU':
                 pc.close()
                 print("You've been kicked from the group chat! \n")
