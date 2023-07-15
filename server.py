@@ -46,26 +46,17 @@ def handle(pc):
                 trimitere(str("--"+nume + " left the chat!--").encode('ascii'))
             elif mesaj.decode('ascii')=='HELP':
                 pc.send(str(comenzi).encode('ascii'))
-            elif mesaj.decode('ascii')=='PASS':
-                pc.send("ADMIN")
-                password=pc.recv(1024)
-                if password.decode('ascii')==passwordreal:
-                    pc.send("You are now an admin!".encode('ascii'))
-                    admins.append(pc)
-            elif mesaj.decode('ascii')=='KICK' and password==passwordreal:
+            elif mesaj.decode('ascii')==passwordreal:
+                pc.send("You are now an admin!".encode('ascii'))
+                admins.append(pc)
+            elif mesaj.decode('ascii').startswith('KICK'):
                 if pc in admins:
-                    pc.send(str(numes).encode('ascii'))
-                    pc.send('NKICK'.encode('ascii'))
-                    nkick=pc.recv(1024).decode('ascii')
-                    if nkick in numes:
-                        index=numes.index(nkick)
-                        numes.remove(nkick)
+                    perskick=mesaj[4:]
+                    if perskick in numes:
+                        index=numes.index(perskick)
                         pcrt=pcs.index(index)
+                        pcrt.send("KICKYOU".encode("ascii"))
                         pcrt.close()
-                        pcs.remove(pcrt)
-                        pcrt.send("KICKYOU".encode('ascii'))
-                    else:
-                        pc.send("Member isn't in the chat!".encode("ascii"))
                 else:
                     pc.send("You are not the admin!".encode('ascii'))
             else:

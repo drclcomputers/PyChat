@@ -32,7 +32,7 @@ def primire():
                 nkick=input('Enter the name of the one you want to kick: ')
                 pc.send(nkick.encode('ascii'))
             elif mesaj=='KICKYOU':
-                print("You've been kicked from the group chat!")
+                print("You've been kicked from the group chat! \n")
                 print("You are no longer connected to the server!")
                 time.sleep(1)
                 print("Closing the client...")
@@ -75,9 +75,11 @@ def trimitere():
             if mesaj[len(nume)+2:].startswith("/help"):
                 pc.send("HELP".encode('ascii'))
             if mesaj[len(nume)+2:].startswith("/pass"):
-                pc.send("PASS".encode('ascii'))
+                password=mesaj[len(nume)+8:]
+                pc.send(password.encode('ascii'))
             if mesaj[len(nume)+2:].startswith("/kick"):
-                pc.send("KICK".encode('ascii'))
+                perskick=mesaj[len(nume)+8:]
+                pc.send(("KICK"+perskick).encode('ascii'))
         else:
             pc.send(mesaj.encode('ascii'))
 
