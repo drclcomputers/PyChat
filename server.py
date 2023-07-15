@@ -36,44 +36,45 @@ def handle(pc):
     while True:
         try:
             mesaj=pc.recv(2048).decode("utf-8")
-            if mesaj=='LIST':
-                trimitere(str(numes).encode("utf-8"))
-            elif mesaj=='TIME':
-                timp=datetime.now()
-                trimitere(str(timp).encode("utf-8"))
-            elif mesaj=='EXIT':
-                pc.close()
-                trimitere(str("--"+nume + " left the chat!--").encode("utf-8"))
-            elif mesaj=='HELP':
-                pc.send(str(comenzi).encode("utf-8"))
-            elif mesaj.startswith('PASSADMIN'):
-                password=mesaj[10:]
-                print("Tried pass is: ."+password+".")
-                if password==passwordreal:
-                    print("This pc is now admin!!!")
-                    pc.send("You are now an admin!".encode("utf-8"))
+            if mesaj.startswith('.'):
+                if mesaj=='.LIST':
+                    trimitere(str(numes).encode("utf-8"))
+                if mesaj=='.TIME':
+                    timp=datetime.now()
+                    trimitere(str(timp).encode("utf-8"))
+                if mesaj=='.EXIT':
+                    pc.close()
+                    trimitere(str("--"+nume + " left the chat!--").encode("utf-8"))
+                if mesaj=='.HELP':
+                    pc.send(str(comenzi).encode("utf-8"))
+                if mesaj.startswith('.PASSADMIN'):
+                    password=mesaj[10:]
+                    print("Tried pass is: ."+password+".")
+                    if password==passwordreal:
+                        print("This pc is now admin!!!")
+                        pc.send("You are now an admin!".encode("utf-8"))
+                        index=pcs.index(pc)
+                        nume=numes[index]
+                        admins.append(nume)
+                    else:
+                        pc.send("Wrong password!!!".encode("utf-8"))
+                    print(str(admins))
+                if mesaj.startswith('.KICK '):
                     index=pcs.index(pc)
                     nume=numes[index]
-                    admins.append(nume)
-                else:
-                    pc.send("Wrong password!!!".encode("utf-8"))
-                print(str(admins))
-            elif mesaj.startswith('KICK '):
-                index=pcs.index(pc)
-                nume=numes[index]
-                if nume in admins:
-                    perskick=mesaj[5:]
-                    print("kicking "+perskick)
-                    if perskick in numes:
-                        index=numes.index(perskick)
-                        pcrt=pcs[index]
-                        numes.remove(perskick)
-                        pcs.remove(pcrt)
-                        pcrt.send("KICKYOU".encode("utf-8"))
+                    if nume in admins:
+                        perskick=mesaj[5:]
+                        print("kicking "+perskick)
+                        if perskick in numes:
+                            index=numes.index(perskick)
+                            pcrt=pcs[index]
+                            numes.remove(perskick)
+                            pcs.remove(pcrt)
+                            pcrt.send("KICKYOU".encode("utf-8"))
+                        else:
+                            pc.send("Person isn't in the chat!".encode("utf-8"))
                     else:
-                        pc.send("Person isn't in the chat!".encode("utf-8"))
-                else:
-                    pc.send("You are not the admin!".encode("utf-8"))
+                        pc.send("You are not the admin!".encode("utf-8"))
             else:
                 trimitere(mesaj)
         except:
@@ -92,7 +93,7 @@ def primire():
         print("Connected "+str(adresa))
 
         pc.send('nume'.encode("utf-8"))
-        nume=pc.recv(1024).decode("utf-8")
+        nume=pc.recv(2048).decode("utf-8")
         numes.append(nume)
         pcs.append(pc)
 

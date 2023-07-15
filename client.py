@@ -62,20 +62,20 @@ def trimitere():
                 print("Closing the client...")
                 exit()
             if mesaj[len(nume)+2:].startswith("/list"):
-                pc.send("LIST".encode("utf-8"))
+                pc.send(".LIST".encode("utf-8"))
             if mesaj[len(nume)+2:].startswith("/time"):
-                pc.send("TIME".encode("utf-8"))
+                pc.send(".TIME".encode("utf-8"))
             if mesaj[len(nume)+2:].startswith("/clear"):
                 os.system('cls')
             if mesaj[len(nume)+2:].startswith("/help"):
-                pc.send("HELP".encode("utf-8"))
+                pc.send(".HELP".encode("utf-8"))
             if mesaj[len(nume)+2:].startswith("/password "):
                 password=mesaj[len(nume)+12:]
                 print(password)
-                pc.send(("PASSADMIN "+password).encode("utf-8"))
+                pc.send((".PASSADMIN "+password).encode("utf-8"))
             if mesaj[len(nume)+2:].startswith("/kick"):
                 perskick=mesaj[len(nume)+8:]
-                pc.send(("KICK "+perskick).encode("utf-8"))
+                pc.send((".KICK "+perskick).encode("utf-8"))
         else:
             pc.send(mesaj.encode("utf-8"))
 
