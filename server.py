@@ -50,6 +50,8 @@ def handle(pc):
                 if mesaj=='.EXIT':
                     pc.close()
                     trimitere(str("--"+nume + " left the chat!--").encode("utf-8"))
+                    pcs.remove(pc)
+                    numes.remove(nume) 
                 if mesaj=='.HELP':
                     pc.send(str(comenzi).encode("utf-8"))
                 if mesaj.startswith('.PASSADMIN'):
@@ -69,7 +71,7 @@ def handle(pc):
                     if nume in admins:
                         perskick=mesaj[6:]
                         print("kicking "+perskick)
-                        if perskick in numes and perskick==nume:
+                        if perskick in numes and perskick!=nume:
                             index=numes.index(perskick)
                             pcrt=pcs[index]
                             numes.remove(perskick)
