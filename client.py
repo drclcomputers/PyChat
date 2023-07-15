@@ -74,7 +74,7 @@ def trimitere():
                 pc.send("HELP".encode('ascii'))
             if mesaj[len(nume)+2:].startswith("/pass"):
                 password=mesaj[len(nume)+8:]
-                pc.send(("passis "+password).encode('ascii'))
+                pc.send(("PASS "+password).encode('ascii'))
             if mesaj[len(nume)+2:].startswith("/kick"):
                 perskick=mesaj[len(nume)+8:]
                 pc.send(("KICK "+perskick).encode('ascii'))

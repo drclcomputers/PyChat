@@ -46,9 +46,11 @@ def handle(pc):
                 trimitere(str("--"+nume + " left the chat!--").encode('ascii'))
             elif mesaj.decode('ascii')=='HELP':
                 pc.send(str(comenzi).encode('ascii'))
-            elif mesaj.decode('ascii').startswith('passis '):
-                print("Tried pass is: ."+mesaj[7:]+".")
-                if mesaj[7:]==passwordreal:
+            elif mesaj.decode('ascii').startswith('PASS '):
+                password=mesaj[5:]
+                print("Tried pass is: ."+password+".")
+                if passwordreal==passwordreal:
+                    print("This pc is now admin!!!")
                     pc.send("You are now an admin!".encode('ascii'))
                     index=pcs.index(pc)
                     nume=numes[index]
