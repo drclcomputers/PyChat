@@ -22,10 +22,10 @@ def primire():
         if running==False:
             break
         try:
-            mesaj=pc.recv(2048).decode("utf-8")
+            mesaj=pc.recv(1024).decode("utf-8")
             if mesaj=='nume':
                 pc.send(nume.encode("utf-8"))
-            elif mesaj=='KICKYOU':
+            elif mesaj=='.KICKYOU':
                 pc.close()
                 print("You've been kicked from the group chat! \n")
                 print("You are no longer connected to the server!")

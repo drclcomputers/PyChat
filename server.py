@@ -35,20 +35,20 @@ def trimitere(mesaj):
 def handle(pc):
     while True:
         try:
-            mesaj=pc.recv(2048).decode("utf-8")
+            mesaj=pc.recv(1024).decode("utf-8")
             if mesaj.startswith('.'):
                 if mesaj=='.LIST':
-                    trimitere(str(numes).encode("utf-8"))
+                    pc.send(str(numes).encode("utf-8"))
                 if mesaj=='.TIME':
                     timp=datetime.now()
-                    trimitere(str(timp).encode("utf-8"))
+                    pc.send(str(timp).encode("utf-8"))
                 if mesaj=='.EXIT':
                     pc.close()
                     trimitere(str("--"+nume + " left the chat!--").encode("utf-8"))
                 if mesaj=='.HELP':
                     pc.send(str(comenzi).encode("utf-8"))
                 if mesaj.startswith('.PASSADMIN'):
-                    password=mesaj[10:]
+                    password=mesaj[11:]
                     print("Tried pass is: ."+password+".")
                     if password==passwordreal:
                         print("This pc is now admin!!!")
@@ -63,20 +63,20 @@ def handle(pc):
                     index=pcs.index(pc)
                     nume=numes[index]
                     if nume in admins:
-                        perskick=mesaj[5:]
+                        perskick=mesaj[6:]
                         print("kicking "+perskick)
                         if perskick in numes:
                             index=numes.index(perskick)
                             pcrt=pcs[index]
                             numes.remove(perskick)
                             pcs.remove(pcrt)
-                            pcrt.send("KICKYOU".encode("utf-8"))
+                            pcrt.send(".KICKYOU".encode("utf-8"))
                         else:
                             pc.send("Person isn't in the chat!".encode("utf-8"))
                     else:
                         pc.send("You are not the admin!".encode("utf-8"))
             else:
-                trimitere(mesaj)
+                trimitere(mesaj.encode("utf-8"))
         except:
             index=pcs.index(pc)
             print(str(pc)+" disconnected!")
@@ -93,7 +93,7 @@ def primire():
         print("Connected "+str(adresa))
 
         pc.send('nume'.encode("utf-8"))
-        nume=pc.recv(2048).decode("utf-8")
+        nume=pc.recv(1024).decode("utf-8")
         numes.append(nume)
         pcs.append(pc)
 
