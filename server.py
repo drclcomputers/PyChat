@@ -35,18 +35,18 @@ def trimitere(mesaj):
 def handle(pc):
     while True:
         try:
-            mesaj=pc.recv(1024)
-            if mesaj.decode('ascii')=='LIST':
+            mesaj=pc.recv(2048).decode('ascii')
+            if mesaj=='LIST':
                 trimitere(str(numes).encode('ascii'))
-            elif mesaj.decode('ascii')=='TIME':
+            elif mesaj=='TIME':
                 timp=datetime.now()
                 trimitere(str(timp).encode('ascii'))
-            elif mesaj.decode('ascii')=='EXIT':
+            elif mesaj=='EXIT':
                 pc.close()
                 trimitere(str("--"+nume + " left the chat!--").encode('ascii'))
-            elif mesaj.decode('ascii')=='HELP':
+            elif mesaj=='HELP':
                 pc.send(str(comenzi).encode('ascii'))
-            elif 'PASSADMIN ' in mesaj.decode('ascii'):
+            elif mesaj.startswith('PASSADMIN'):
                 password=mesaj[9:]
                 print("Tried pass is: ."+password+".")
                 if password==passwordreal:
@@ -58,7 +58,7 @@ def handle(pc):
                 else:
                     pc.send("Wrong password!!!".encode('ascii'))
                 print(str(admins))
-            elif 'KICK ' in mesaj.decode('ascii'):
+            elif mesaj.startswith('KICK '):
                 index=pcs.index(pc)
                 nume=numes[index]
                 if nume in admins:

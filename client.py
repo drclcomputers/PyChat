@@ -22,7 +22,7 @@ def primire():
         if running==False:
             break
         try:
-            mesaj=pc.recv(1024).decode('ascii')
+            mesaj=pc.recv(2048).decode('ascii')
             if mesaj=='nume':
                 pc.send(nume.encode('ascii'))
             elif mesaj=='KICKYOU':
@@ -69,8 +69,9 @@ def trimitere():
                 os.system('cls')
             if mesaj[len(nume)+2:].startswith("/help"):
                 pc.send("HELP".encode('ascii'))
-            if mesaj[len(nume)+2:].startswith("/pass"):
-                password=mesaj[len(nume)+8:]
+            if mesaj[len(nume)+2:].startswith("/password "):
+                password=mesaj[len(nume)+12:]
+                print(password)
                 pc.send(("PASSADMIN "+password).encode('ascii'))
             if mesaj[len(nume)+2:].startswith("/kick"):
                 perskick=mesaj[len(nume)+8:]
