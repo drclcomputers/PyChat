@@ -47,7 +47,7 @@ def handle(pc):
             elif mesaj.decode('ascii')=='HELP':
                 pc.send(str(comenzi).encode('ascii'))
             elif mesaj.decode('ascii').startswith('passis'):
-                print(mesaj[6:])
+                print("Tried pass is: ."+mesaj[7:]+".")
                 if mesaj[6:]==passwordreal:
                     pc.send("You are now an admin!".encode('ascii'))
                     index=pcs.index(pc)
