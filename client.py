@@ -5,7 +5,7 @@ import time
 from colorama import Fore, Style
 
 os.system("cls")
-print("PyChat ver 0.6.8 --client \n")
+print("PyChat ver 0.6.9 --client \n")
 ipadresa=input("Enter the adress of the server: ")
 portadr=input("Enter the port of the server: ")
 
@@ -74,7 +74,7 @@ def trimitere():
                 pc.send("HELP".encode('ascii'))
             if mesaj[len(nume)+2:].startswith("/pass"):
                 password=mesaj[len(nume)+8:]
-                pc.send(password.encode('ascii'))
+                pc.send("passis"+password.encode('ascii'))
             if mesaj[len(nume)+2:].startswith("/kick"):
                 perskick=mesaj[len(nume)+8:]
                 pc.send(("KICK "+perskick).encode('ascii'))
