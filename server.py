@@ -5,8 +5,9 @@ import time
 from datetime import datetime
 
 os.system("cls")
-print("PyChat ver 0.7.5 --server \n")
-host='127.0.0.1'
+print("PyChat ver 0.7.7 --server \n")
+ip=input("Input server (this pc's) IP address: ")
+host=str(ip)
 port=55555
 passwordreal=input("Set admin password: ")
 
@@ -72,8 +73,8 @@ def handle(pc):
                         perskick=mesaj[6:]
                         print("kicking "+perskick)
                         if perskick in numes and perskick!=nume:
-                            index=numes.index(perskick)
-                            pcrt=pcs[index]
+                            index2=numes.index(perskick)
+                            pcrt=pcs[index2]
                             numes.remove(perskick)
                             pcs.remove(pcrt)
                             pcrt.send(".KICKYOU".encode("utf-8"))
